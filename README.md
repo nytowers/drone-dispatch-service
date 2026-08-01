@@ -22,7 +22,7 @@ Starts on http://localhost:8080
 H2 console: http://localhost:8080/h2-console
 JDBC URL `jdbc:h2:mem:dronedb` · user `sa` · blank password
 
-6 drones and 2 medications are preloaded at startup from
+10 drones and 2 medications are preloaded at startup from
 `src/main/resources/data.sql`.
 
 ## Test
