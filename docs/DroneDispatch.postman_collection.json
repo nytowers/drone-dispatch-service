@@ -1,0 +1,85 @@
+{
+  "info": {
+    "name": "Drone Dispatch Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "serialNumber", "value": "DRN-1001" }
+  ],
+  "item": [
+    {
+      "name": "1. Registering a drone",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/v1/drones", "host": ["{{baseUrl}}"], "path": ["api","v1","drones"] },
+        "body": { "mode": "raw", "raw": "{\n  \"serialNumber\": \"DRN-1001\",\n  \"model\": \"MIDDLEWEIGHT\",\n  \"weightLimit\": 500,\n  \"batteryCapacity\": 90\n}" }
+      }
+    },
+    {
+      "name": "2. Loading a drone with medication",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/v1/drones/{{serialNumber}}/medications", "host": ["{{baseUrl}}"], "path": ["api","v1","drones","{{serialNumber}}","medications"] },
+        "body": { "mode": "raw", "raw": "[\n  { \"name\": \"Paracetamol_500\", \"weight\": 150, \"code\": \"PARA_500\", \"image\": null },\n  { \"name\": \"Amoxicillin-250\", \"weight\": 200, \"code\": \"AMOX_250\", \"image\": null }\n]" }
+      }
+    },
+    {
+      "name": "3. Checking loaded medications for a given drone",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/v1/drones/{{serialNumber}}/medications", "host": ["{{baseUrl}}"], "path": ["api","v1","drones","{{serialNumber}}","medications"] }
+      }
+    },
+    {
+      "name": "4. Checking available drones for loading",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/v1/drones/available", "host": ["{{baseUrl}}"], "path": ["api","v1","drones","available"] }
+      }
+    },
+    {
+      "name": "5. Check drone information (battery)",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/v1/drones/{{serialNumber}}/battery", "host": ["{{baseUrl}}"], "path": ["api","v1","drones","{{serialNumber}}","battery"] }
+      }
+    },
+    {
+      "name": "6. Rejected - battery below 25%",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/v1/drones/DRN-0002-LW/medications", "host": ["{{baseUrl}}"], "path": ["api","v1","drones","DRN-0002-LW","medications"] },
+        "body": { "mode": "raw", "raw": "[\n  { \"name\": \"Insulin\", \"weight\": 50, \"code\": \"INS_01\" }\n]" }
+      }
+    },
+    {
+      "name": "7. Rejected - overloaded",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/v1/drones/DRN-0001-LW/medications", "host": ["{{baseUrl}}"], "path": ["api","v1","drones","DRN-0001-LW","medications"] },
+        "body": { "mode": "raw", "raw": "[\n  { \"name\": \"Heavy_Box\", \"weight\": 900, \"code\": \"HVY_01\" }\n]" }
+      }
+    },
+    {
+      "name": "8. Rejected - invalid medication code",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/v1/drones/DRN-0003-MW/medications", "host": ["{{baseUrl}}"], "path": ["api","v1","drones","DRN-0003-MW","medications"] },
+        "body": { "mode": "raw", "raw": "[\n  { \"name\": \"Insulin\", \"weight\": 50, \"code\": \"ins_01\" }\n]" }
+      }
+    },
+    {
+      "name": "9. Rejected - unknown drone",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/v1/drones/DOES-NOT-EXIST/battery", "host": ["{{baseUrl}}"], "path": ["api","v1","drones","DOES-NOT-EXIST","battery"] }
+      }
+    }
+  ]
+}
