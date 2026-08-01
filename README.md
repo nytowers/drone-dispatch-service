@@ -7,13 +7,25 @@ Java 17+ · Spring Boot 4.1.0 · Spring Data JPA · H2 (in-memory)
 
 ## Build
 
+Git Bash, macOS or Linux:
 ```bash
+./mvnw clean package
+```
+
+Windows PowerShell:
+```powershell
 .\mvnw.cmd clean package
 ```
 
 ## Run
 
+Git Bash, macOS or Linux:
 ```bash
+./mvnw spring-boot:run
+```
+
+Windows PowerShell:
+```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
@@ -27,11 +39,15 @@ JDBC URL `jdbc:h2:mem:dronedb` · user `sa` · blank password
 
 ## Test
 
+Git Bash, macOS or Linux:
 ```bash
-.\mvnw.cmd clean test
+./mvnw clean test
 ```
 
-On macOS/Linux use `./mvnw` instead of `.\mvnw.cmd`.
+Windows PowerShell:
+```powershell
+.\mvnw.cmd clean test
+```
 
 ## APIs
 
